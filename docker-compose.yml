@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  node-red:
+    container_name: template-node-red-environment
+    image: nodered/node-red:latest
+    ports:
+      - 1880:1880
+    volumes:
+      - node-red-data:/data
+      - ./node-red/settings.js:/data/settings.js
+    networks:
+      - node-red-net
+
+volumes:
+  node-red-data:
+    name: template-node-red-environment-data
+
+networks:
+  node-red-net:
+    name: template-node-red-environment-net
