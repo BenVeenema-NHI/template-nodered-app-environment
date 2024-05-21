@@ -1,7 +1,11 @@
 version: '3.8'
+
+# Find and replace "template-nodered-app" with your project name
+name: template-nodered-app
+
 services:
   node-red:
-    container_name: template-node-red-environment
+    container_name: template-nodered-app-nodered
     image: nodered/node-red:latest
     ports:
       - 1880:1880
@@ -10,11 +14,16 @@ services:
       - ./node-red/settings.js:/data/settings.js
     networks:
       - node-red-net
+    environment:
+      - TEST="Hello World"
+    env_file:
+      - path: .env
+        required: true
 
 volumes:
   node-red-data:
-    name: template-node-red-environment-data
+    name: template-nodered-app-data
 
 networks:
   node-red-net:
-    name: template-node-red-environment-net
+    name: template-nodered-app-net
