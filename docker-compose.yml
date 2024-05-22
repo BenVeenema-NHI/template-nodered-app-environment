@@ -13,17 +13,28 @@ services:
       - node-red-data:/data
       - ./node-red/settings.js:/data/settings.js
     networks:
-      - node-red-net
+      - template-nodered-app-net
     environment:
       - TEST="Hello World"
     env_file:
-      - path: .env
+      - path: dev.env
         required: true
+  broker:
+    container_name: template-nodered-app-broker
+    image: eclipse-mosquitto:latest
+    ports:
+      - 1883:1883
+    networks:
+      - template-nodered-app-net
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - ./broker/mosquitto-dev.conf:/mosquitto/config/mosquitto.conf
 
 volumes:
   node-red-data:
     name: template-nodered-app-data
 
 networks:
-  node-red-net:
+  template-nodered-app-net:
     name: template-nodered-app-net
