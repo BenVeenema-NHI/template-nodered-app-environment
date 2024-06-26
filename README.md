@@ -1,6 +1,6 @@
 # My Docker Project
 
-This project contains a Docker Compose configuration file and documentation for setting up a Node-RED container.
+This project contains a Docker Compose configuration file and documentation for setting up a Node-RED based project in a container. It is setup to create a Node-Red app in production and additionally, a Mosquitto container in development.
 
 ## Getting Started
 
@@ -11,16 +11,25 @@ To get started with this project, follow the steps below:
 3. Navigate to the project directory.
 
 ## Usage
+Once the container is started, you can access the NodeRed environment on `localHost:1880/`. If in development mode, you can access the MQTT broker on `localHost:1883`
 
 ### Starting the Node-RED Container
-
-To start the Node-RED container, run the following command:
+#### Development
+To start the environment in development mode run the following command:
 
 ```bash
 docker-compose up -d
 ```
 
-This command will start the container in detached mode, allowing it to run in the background.
+This command will start the NodeRed and Mosquitto containers in detached mode, allowing it to run in the background.
+
+#### Production
+To start the enviroment in production mode run the following command:
+```bash
+docker compose -f "docker-compose.yml" up -d
+```
+
+This command will start only the NodeRed container in detached mode.
 
 ### Accessing Node-RED
 

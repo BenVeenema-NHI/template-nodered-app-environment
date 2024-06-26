@@ -6,7 +6,7 @@ name: template-nodered-app
 services:
   node-red:
     container_name: template-nodered-app-nodered
-    image: nodered/node-red:latest
+    build: ./node-red
     ports:
       - 1880:1880
     volumes:
@@ -16,20 +16,7 @@ services:
       - template-nodered-app-net
     environment:
       - TEST="Hello World"
-    env_file:
-      - path: dev.env
-        required: true
-  broker:
-    container_name: template-nodered-app-broker
-    image: eclipse-mosquitto:latest
-    ports:
-      - 1883:1883
-    networks:
-      - template-nodered-app-net
-    volumes:
-      - mosquitto-data:/mosquitto/data
-      - mosquitto-log:/mosquitto/log
-      - ./broker/mosquitto-dev.conf:/mosquitto/config/mosquitto.conf
+    env_file: "prod.env"
 
 volumes:
   node-red-data:
@@ -37,4 +24,3 @@ volumes:
 
 networks:
   template-nodered-app-net:
-    name: template-nodered-app-net

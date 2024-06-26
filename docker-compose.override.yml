@@ -1,0 +1,27 @@
+version: '3.8'
+
+name: template-nodered-app
+
+services:
+  node-red:
+    env_file: "dev.env"
+  broker:
+    container_name: template-nodered-app-broker
+    image: eclipse-mosquitto:latest
+    ports:
+      - 1883:1883
+    networks:
+      - template-nodered-app-net
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - ./broker/mosquitto-dev.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  mosquitto-data:
+    name: template-nodered-app-mosquitto-data
+  mosquitto-log:
+    name: template-nodered-app-mosquitto-log
+    
+networks:
+  template-nodered-app-net:
