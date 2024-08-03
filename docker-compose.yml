@@ -8,14 +8,12 @@ services:
     container_name: template-nodered-app-nodered
     build: ./node-red
     ports:
-      - 1880:1880
+      - "${NODE_RED_PORT:-1880}:1880"
     volumes:
       - node-red-data:/data
       - ./node-red/settings.js:/data/settings.js
     networks:
       - template-nodered-app-net
-    environment:
-      - TEST="Hello World"
     env_file: "prod.env"
 
 volumes:
