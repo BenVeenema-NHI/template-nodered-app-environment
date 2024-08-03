@@ -18,15 +18,20 @@ Once the container is started, you can access the NodeRed environment on `localH
 To start the environment in development mode run the following command:
 
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 This command will start the NodeRed and Mosquitto containers in detached mode, allowing it to run in the background.
 
 #### Production
-To start the enviroment in production mode run the following command:
+To start the enviroment in production mode run the following command, where XXXX is the desired port to access node-red in production (this assumes it is being run in a linux environment):
+##### Linux
 ```bash
-docker compose -f "docker-compose.yml" up -d
+NODE_RED_PORT=XXXX docker-compose -f "docker-compose.yml" up -d --build
+```
+##### Windows
+```bash
+$env:NODE_RED_PORT="XXXX"; docker-compose up -d
 ```
 
 This command will start only the NodeRed container in detached mode.
