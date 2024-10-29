@@ -1,5 +1,3 @@
-version: '3.8'
-
 # Find and replace "template-nodered-app" with your project name
 name: template-nodered-app
 

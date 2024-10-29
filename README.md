@@ -74,4 +74,3 @@ The `node-red` service uses the `nodered/node-red` image and exposes port `1880`
 ## License
 
 This project is currently unlicensed.
-```
