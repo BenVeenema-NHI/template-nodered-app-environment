@@ -2,7 +2,7 @@ name: template-nodered-app
 
 services:
   node-red:
-    env_file: "dev.env"
+    env_file: "node-red/dev.env"
   broker:
     container_name: template-nodered-app-broker
     image: eclipse-mosquitto:latest

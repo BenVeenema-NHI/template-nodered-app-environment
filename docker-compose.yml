@@ -12,7 +12,7 @@ services:
       - ./node-red/settings.js:/data/settings.js
     networks:
       - template-nodered-app-net
-    env_file: "prod.env"
+    env_file: "node-red/prod.env"
 
 volumes:
   node-red-data:
