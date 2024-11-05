@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: schemas.yaml
+  - include:
+      file: users.yaml
+  - includeAll:
+      path: production/

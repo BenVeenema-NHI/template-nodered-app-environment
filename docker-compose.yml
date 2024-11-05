@@ -18,7 +18,29 @@ services:
       interval: 2s
       timeout: 1s
       retries: 10
-
+  
+  db-manager:
+    container_name: template-nodered-app-db-manager
+    build: ./db-manager
+    env_file:
+      - .env
+    volumes:
+      # Example changelog is in db-manager/changelog - update per application needs
+      - ./db-manager/changelog:/liquibase/changelog
+    networks:
+      - template-nodered-app-net
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    command: 
+      - --classpath=/liquibase/changelog
+      - --changeLogFile=root.yaml
+      - --url=jdbc:postgresql://db:5432/postgres
+      - --username=${POSTGRES_USER}
+      - --password=${POSTGRES_PASSWORD}
+      - --logLevel=debug
+      - update
 
   node-red:
     container_name: template-nodered-app-nodered

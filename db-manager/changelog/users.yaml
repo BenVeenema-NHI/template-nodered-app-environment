@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - logicalFilePath: users
+# create the nodered user from the .env file with permission to read, write, update, and delete in production and monitoring schemas
+  - changeSet:
+      id: "1"
+      author: firstName lastName
+      changes:
+        - sql:
+            sql: CREATE ROLE ${POSTGRES_NODERED_USER} WITH LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION PASSWORD '${POSTGRES_NODERED_PASSWORD}';
+                  GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA production TO ${POSTGRES_NODERED_USER};
+      rollback:
+        - sql:
+            sql: DROP USER IF EXISTS ${POSTGRES_NODERED_USER};
