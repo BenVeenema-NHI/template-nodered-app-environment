@@ -1,0 +1,6 @@
+# Ignore .env file containing credentials, API keys, and other secrets
+# IMPORTANT! uncomment this line in production - secrets are configured in this file
+# .env
+
+# Ignore database volume
+db_data/

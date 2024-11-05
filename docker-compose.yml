@@ -2,6 +2,24 @@
 name: template-nodered-app
 
 services:
+  db:
+    container_name: template-nodered-app-db
+    build: ./db
+    env_file:
+      - .env
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    networks:
+      - template-nodered-app-net
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
+
+
   node-red:
     container_name: template-nodered-app-nodered
     build: ./node-red
@@ -12,7 +30,9 @@ services:
       - ./node-red/settings.js:/data/settings.js
     networks:
       - template-nodered-app-net
-    env_file: "node-red/prod.env"
+    env_file: 
+      - "node-red/prod.env"
+      - ".env"
 
 volumes:
   node-red-data:
