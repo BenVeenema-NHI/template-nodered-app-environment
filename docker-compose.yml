@@ -1,9 +1,47 @@
-version: '3.8'
-
 # Find and replace "template-nodered-app" with your project name
 name: template-nodered-app
 
 services:
+  db:
+    container_name: template-nodered-app-db
+    build: ./db
+    env_file:
+      - .env
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    networks:
+      - template-nodered-app-net
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
+  
+  db-manager:
+    container_name: template-nodered-app-db-manager
+    build: ./db-manager
+    env_file:
+      - .env
+    volumes:
+      # Example changelog is in db-manager/changelog - update per application needs
+      - ./db-manager/changelog:/liquibase/changelog
+    networks:
+      - template-nodered-app-net
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    command: 
+      - --classpath=/liquibase/changelog
+      - --changeLogFile=root.yaml
+      - --url=jdbc:postgresql://db:5432/postgres
+      - --username=${POSTGRES_USER}
+      - --password=${POSTGRES_PASSWORD}
+      - --logLevel=debug
+      - update
+
   node-red:
     container_name: template-nodered-app-nodered
     build: ./node-red
@@ -14,7 +52,9 @@ services:
       - ./node-red/settings.js:/data/settings.js
     networks:
       - template-nodered-app-net
-    env_file: "prod.env"
+    env_file: 
+      - "node-red/prod.env"
+      - ".env"
 
 volumes:
   node-red-data:

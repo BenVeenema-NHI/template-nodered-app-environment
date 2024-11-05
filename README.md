@@ -33,8 +33,12 @@ NODE_RED_PORT=XXXX docker-compose -f "docker-compose.yml" up -d --build
 ```bash
 $env:NODE_RED_PORT="XXXX"; docker-compose up -d
 ```
-
 This command will start only the NodeRed container in detached mode.
+
+#### A note on ports
+We want to avoid ports for common protocols (0-1023) and stay in the user ports section (1024-49151), however, many of the "user ports" have been attached to common services (node-red: 1880, mqtt: 1883). According [to this stackoverflow](https://stackoverflow.com/questions/10476987/best-tcp-port-number-range-for-internal-applications), the range 29170-29998 has the most open ports in sequence
+
+
 
 ### Accessing Node-RED
 
@@ -70,4 +74,3 @@ The `node-red` service uses the `nodered/node-red` image and exposes port `1880`
 ## License
 
 This project is currently unlicensed.
-```

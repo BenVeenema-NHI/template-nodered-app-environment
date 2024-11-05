@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - logicalFilePath: production-count
+# create a changeset that creates the following table: CREATE TABLE IF NOT EXISTS production.count (id integer NOT NULL DEFAULT nextval('production.count_id_seq'::regclass),current_count integer,lifetime_count integer,"timestamp" timestamp without time zone,CONSTRAINT count_pkey PRIMARY KEY (id))
+  - changeSet:
+      id: "1"
+      author: firstName lastName
+      changes:
+        - createTable:
+            schemaName: production
+            tableName: count
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: current_count
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lifetime_count
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+

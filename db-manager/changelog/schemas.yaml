@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - logicalFilePath: schemas
+  # Create Production Schema
+  - changeSet:
+      id: "1"
+      author: firstName lastName
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS production;
+      rollback:
+        - sql:
+            sql: DROP SCHEMA IF EXISTS production CASCADE;           
