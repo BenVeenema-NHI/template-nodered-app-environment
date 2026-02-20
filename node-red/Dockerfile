@@ -19,3 +19,4 @@ RUN npm install node-red-contrib-mssql-plus
 RUN npm install @nhimm/node-red-contrib-data-forge
 RUN npm install node-red-contrib-filesystem
 RUN npm install node-red-contrib-postgresql
+RUN npm install node-red-contrib-spreadsheet-in
